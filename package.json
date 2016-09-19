@@ -1,0 +1,20 @@
+{
+  "name": "apptemplate",
+  "version": "0.0.1",
+  "description": "A simple template for designing more complex web applications",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vrq/AppTemplate.git"
+  },
+  "author": "jtveiro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vrq/AppTemplate/issues"
+  },
+  "homepage": "https://github.com/Vrq/AppTemplate#readme"
+}
