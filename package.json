@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +17,14 @@
   "bugs": {
     "url": "https://github.com/Vrq/AppTemplate/issues"
   },
-  "homepage": "https://github.com/Vrq/AppTemplate#readme"
+  "homepage": "https://github.com/Vrq/AppTemplate#readme",
+  "dependencies": {
+    "ejs": "^2.5.2",
+    "express": "^4.14.0",
+    "mongodb": "^2.2.10",
+    "mongoose": "^4.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.10.2"
+  }
 }
