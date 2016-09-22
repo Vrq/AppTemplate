@@ -1,9 +1,16 @@
 const express = require('express');
+const http = require('http');
+const React = require('react');
+const ReactDom = require('react-dom/server');
+const Router = require('react-router');
+const routesConfig = require('./src/routesConfig');
 const path = require('path');
 const mongoose = require('mongoose');
 const Game = require('./models/GameModel');
 const Player = require('./models/PlayerModel');
+
 const app = express();
+
 
 //settings for res.render:
 app.set('view engine', 'ejs');
@@ -15,16 +22,26 @@ mongoose.connection.on('error', function() {
   console.info('Error: Could not connect to MongoDB');
 });
 
-//GET request for the main page:
-app.get('/', function(req, res) {
-  Player.find({}, function(err, result) {
-    if(err) {
-      return console.log("Error with getting the list of players: " + err);
-    }
-    res.render('index', {players: result});
-  })
+// TODO: strona 337 z ebooka
 
-})
+//GET request for the main page:
+app.get('*', function(req, res) {
+  Router.match(
+    {routes: routesConfig, location: req.url},
+    (error, redirectLocation, renderProps) => {
+      if(error) {
+        res.status(500).send(error.message)
+      } else if(redirectLocation) {
+        res.redirect(403, redirectLocation.pathname + redirectLocation.search)
+      } else if (renderProps) {
+        const markup = ReactDom.renderToString(<Router.RouterContext {...renderProps} />);
+        res.render('index', {markup});
+      } else {
+        res.status(404).send('Not found')
+      }
+    }
+  );
+});
 
 //starting the server:
 app.listen(3000, function() {
