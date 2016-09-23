@@ -1,7 +1,7 @@
-const express = require('express');
+const Express = require('express');
 const http = require('http');
 const React = require('react');
-const ReactDom = require('react-dom/server');
+const ReactDowm = require('react-dom/server');
 const Router = require('react-router');
 const routesConfig = require('./src/routesConfig');
 const path = require('path');
@@ -9,8 +9,8 @@ const mongoose = require('mongoose');
 const Game = require('./models/GameModel');
 const Player = require('./models/PlayerModel');
 
-const app = express();
-
+const app = new Express();
+const server = new http.Server(app);
 
 //settings for res.render:
 app.set('view engine', 'ejs');
@@ -22,7 +22,8 @@ mongoose.connection.on('error', function() {
   console.info('Error: Could not connect to MongoDB');
 });
 
-// TODO: strona 337 z ebooka
+// to run:
+// ./node_modules/.bin/babel-node --presets 'react,es2015' server.js
 
 //GET request for the main page:
 app.get('*', function(req, res) {
@@ -32,7 +33,7 @@ app.get('*', function(req, res) {
       if(error) {
         res.status(500).send(error.message)
       } else if(redirectLocation) {
-        res.redirect(403, redirectLocation.pathname + redirectLocation.search)
+        res.redirect(302, redirectLocation.pathname + redirectLocation.search)
       } else if (renderProps) {
         const markup = ReactDom.renderToString(<Router.RouterContext {...renderProps} />);
         res.render('index', {markup});
@@ -43,7 +44,12 @@ app.get('*', function(req, res) {
   );
 });
 
+
+
 //starting the server:
-app.listen(3000, function() {
-  console.log("Listening on port 3000");
+server.listen(3000, (err) => {
+  if(err) {
+    return console.error(err);
+  }
+  console.info('Server on localhost:3000');
 });
